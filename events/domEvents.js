@@ -1,13 +1,13 @@
 import { deleteBook, getBooks, getSingleBook } from '../api/bookData';
 import { showBooks } from '../pages/books';
 import {
-  deleteSingleAuthor, getAuthors, getSingleAuthor, getAuthorBooks
+  deleteSingleAuthor, getAuthors, getSingleAuthor
 }
   from '../api/authorData';
 import { showAuthors } from '../pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
-import { getBookDetails, deleteAuthorBooksRelationship } from '../api/mergedData';
+import { getBookDetails, deleteAuthorBooksRelationship, getAuthorDetails } from '../api/mergedData';
 import viewBook from '../pages/viewBook';
 import viewAuthor from '../pages/viewAuthorsBook';
 
@@ -80,7 +80,7 @@ const domEvents = () => {
       console.warn(e.target.id.split('--'));
 
       const [, firebaseKey] = e.target.id.split('--');
-      getAuthorBooks(firebaseKey).then(viewAuthor);
+      getAuthorDetails(firebaseKey).then(viewAuthor);
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
