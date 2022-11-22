@@ -1,17 +1,17 @@
 import { deleteBook, getBooks, getSingleBook } from '../api/bookData';
 import { showBooks } from '../pages/books';
 import {
-  deleteSingleAuthor, getAuthors, getSingleAuthor, getAuthorBooks
+  deleteSingleAuthor, getAuthors, getSingleAuthor
 }
   from '../api/authorData';
 import { showAuthors } from '../pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
-import { getBookDetails, deleteAuthorBooksRelationship } from '../api/mergedData';
+import { getBookDetails, deleteAuthorBooksRelationship, getAuthorDetails } from '../api/mergedData';
 import viewBook from '../pages/viewBook';
 import viewAuthor from '../pages/viewAuthorsBook';
 
-const domEvents = () => {
+const domEvents = (user) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // TODO: CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
@@ -20,7 +20,7 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteBook(firebaseKey).then(() => {
-          getBooks().then(showBooks);
+          getBooks(user.uid).then(showBooks);
         });
       }
     }
@@ -28,6 +28,7 @@ const domEvents = () => {
     // TODO: CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
       // console.warn('ADD BOOK');
+      console.warn(addBookForm);
       addBookForm();
     }
 
@@ -57,7 +58,7 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteSingleAuthor(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(user.uid).then(showAuthors);
         });
       }
     }
@@ -80,7 +81,7 @@ const domEvents = () => {
       console.warn(e.target.id.split('--'));
 
       const [, firebaseKey] = e.target.id.split('--');
-      getAuthorBooks(firebaseKey).then(viewAuthor);
+      getAuthorDetails(firebaseKey).then(viewAuthor);
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
@@ -90,7 +91,7 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteAuthorBooksRelationship(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(user.uid).then(showAuthors);
         });
       }
     }
