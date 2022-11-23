@@ -29,7 +29,7 @@ const domEvents = (user) => {
     if (e.target.id.includes('add-book-btn')) {
       // console.warn('ADD BOOK');
       console.warn(addBookForm);
-      addBookForm();
+      addBookForm({}, user);
     }
 
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
@@ -38,7 +38,7 @@ const domEvents = (user) => {
       // console.warn(e.target.id.split('--'));
       const [, firebaseKey] = e.target.id.split('--');
 
-      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj));
+      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj, user));
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
